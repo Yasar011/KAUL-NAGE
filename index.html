@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAULĪNAGE | The Noble Lineage of Light</title>
+    
+    <!-- Google Fonts for Luxury Serif Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Config for Tailwind to match React Project -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            light: '#fcf6ba',
+                            DEFAULT: '#D4AF37',
+                            dark: '#b38728',
+                            brown: '#bf953f'
+                        },
+                        onyx: '#050505',
+                        charcoal: '#0a0a0a'
+                    },
+                    animation: {
+                        'slow-zoom': 'zoom 20s infinite alternate',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        zoom: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.1)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+        
+        /* Text Selection Style */
+        ::selection {
+            background-color: #D4AF37;
+            color: black;
+        }
+    </style>
+</head>
+<body class="bg-onyx text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-8">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo Area -->
+            <div class="flex flex-col items-center md:items-start group cursor-pointer">
+                <h1 class="text-2xl md:text-3xl font-serif tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-gold-brown via-gold-light to-gold-dark drop-shadow-sm">
+                    KAULĪNAGE
+                </h1>
+                <span class="text-[0.55rem] tracking-[0.4em] uppercase text-gold opacity-80 group-hover:tracking-[0.6em] transition-all duration-500">
+                    The Noble Lineage of Light
+                </span>
+            </div>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-12">
+                <a href="#maison" class="text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300 relative group">
+                    Maison
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#the-drop" class="text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300 relative group">
+                    The Drop
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#collections" class="text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300 relative group">
+                    Collections
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#atelier" class="text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300 relative group">
+                    Atelier
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#provenance" class="text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300 relative group">
+                    Provenance
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <!-- Icons -->
+            <div class="flex items-center space-x-6">
+                <button class="text-gold hover:text-white transition-colors">
+                    <span class="sr-only">Search</span>
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button class="text-gold hover:text-white transition-colors relative">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="absolute -top-2 -right-2 bg-[#8a0303] text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gold">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-onyx flex-col justify-center items-center space-y-8 hidden animate-fade-in">
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-gold">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#maison" class="mobile-link text-2xl font-serif text-gold uppercase tracking-widest">Maison</a>
+        <a href="#the-drop" class="mobile-link text-2xl font-serif text-gold uppercase tracking-widest">The Drop</a>
+        <a href="#collections" class="mobile-link text-2xl font-serif text-gold uppercase tracking-widest">Collections</a>
+        <a href="#atelier" class="mobile-link text-2xl font-serif text-gold uppercase tracking-widest">Atelier</a>
+        <a href="#provenance" class="mobile-link text-2xl font-serif text-gold uppercase tracking-widest">Provenance</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header id="maison" class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <!-- Background Gradient/Image Placeholder -->
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-30 scale-105 animate-slow-zoom"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-onyx/80 via-transparent to-onyx"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-onyx/90 via-transparent to-onyx/90"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+            <div class="mb-6 inline-flex items-center justify-center border border-gold/30 px-4 py-1 rounded-full backdrop-blur-sm">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-3 animate-pulse"></span>
+                <span class="text-[10px] uppercase tracking-[0.3em] text-gray-300">Drop #01 Live Now</span>
+            </div>
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-serif text-transparent bg-clip-text bg-gradient-to-b from-gold-light to-gold-dark mb-8 leading-tight drop-shadow-2xl">
+                Heirlooms of <br/> Conscience
+            </h2>
+            <p class="text-lg md:text-xl font-light text-gray-400 mb-10 tracking-wide max-w-2xl mx-auto leading-relaxed">
+                The world's most precise Jaipur Micro-Enamel Artistry, guaranteed in 22k Ethical Gold. We do not sell commodities; we sell time.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <button class="px-10 py-4 bg-gold text-black font-semibold uppercase tracking-[0.2em] text-xs hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                    Explore The Collection
+                </button>
+                <button class="px-10 py-4 border border-gold text-gold font-semibold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-black transition-all duration-300">
+                    The Artisan's Story
+                </button>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-70 animate-bounce">
+            <span class="text-[10px] uppercase tracking-widest mb-2 text-gold">Discover</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent"></div>
+        </div>
+    </header>
+
+    <!-- VALUES SECTION -->
+    <section class="py-24 bg-charcoal border-t border-gold/10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                
+                <!-- Value 1 -->
+                <div class="group p-8 border border-gold/5 hover:border-gold/30 transition-all duration-500 bg-gradient-to-b from-transparent to-[#0f0f0f]">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-gold/20 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="clock" class="text-gold w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-gold mb-4 tracking-widest">PATIENCE</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        The discipline of time. Our enamel is fired up to <span class="text-white">18 times</span> to achieve signature depth. We reject the rush of fast fashion.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="group p-8 border border-gold/5 hover:border-gold/30 transition-all duration-500 bg-gradient-to-b from-transparent to-[#0f0f0f]">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-gold/20 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="shield-check" class="text-gold w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-gold mb-4 tracking-widest">INTEGRITY</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        Uncompromised purity. We use only <span class="text-white">22k Ethical Gold</span> (recycled or conflict-free) for a clean conscience.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="group p-8 border border-gold/5 hover:border-gold/30 transition-all duration-500 bg-gradient-to-b from-transparent to-[#0f0f0f]">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-gold/20 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="user" class="text-gold w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-gold mb-4 tracking-widest">NOBILITY</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        True luxury ennobles the maker. We guarantee <span class="text-white">fair, salaried wages</span> and healthcare for every master artisan.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- THE COLLECTIONS (Tabs) -->
+    <section id="collections" class="py-24 relative bg-onyx">
+        <div class="container mx-auto px-6 mb-16 text-center">
+            <span class="text-gold uppercase tracking-[0.4em] text-xs block mb-4">Curated Masterpieces</span>
+            <h2 class="text-4xl md:text-5xl font-serif text-white tracking-wider">The Lineage</h2>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="flex justify-center mb-16">
+            <div class="flex border-b border-gold/30">
+                <button onclick="switchTab('nawab')" id="tab-nawab" class="tab-btn px-8 py-4 text-sm uppercase tracking-[0.2em] transition-all duration-300 text-gold border-b-2 border-gold">
+                    The Nawab
+                </button>
+                <button onclick="switchTab('rajkumari')" id="tab-rajkumari" class="tab-btn px-8 py-4 text-sm uppercase tracking-[0.2em] transition-all duration-300 text-gray-600 hover:text-gray-400">
+                    The Rajkumari
+                </button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="container mx-auto px-6">
+            <!-- Nawab Content -->
+            <div id="content-nawab" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1596944924616-b0e122b5455f?q=80&w=2070&auto=format&fit=crop" alt="Royal Cufflinks" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute top-4 left-4 bg-gold text-black text-[10px] font-bold uppercase px-3 py-1">Limited: 22/50</div>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Royal Cufflinks</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier II: Investment Heirloom</p>
+                        <p class="text-gold font-medium">₹5,50,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1620608560283-827d09228477?q=80&w=1974&auto=format&fit=crop" alt="Lapel Pin" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Lapel Pin</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier I: Prestige Access</p>
+                        <p class="text-gold font-medium">₹1,50,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1616853683693-0100d072f447?q=80&w=1964&auto=format&fit=crop" alt="Shirt Stud Set" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Shirt Stud Set</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier II: Investment Heirloom</p>
+                        <p class="text-gold font-medium">₹3,50,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1633934542430-0905ccb5f050?q=80&w=2050&auto=format&fit=crop" alt="Bespoke Brooch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">Inquire</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Bespoke Brooch</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier III: Haute Enamelling</p>
+                        <p class="text-gold font-medium">On Request</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rajkumari Content (Hidden by default) -->
+            <div id="content-rajkumari" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?q=80&w=2012&auto=format&fit=crop" alt="Swan Scarf Weight" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Swan Scarf Weight</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier I: Prestige Access</p>
+                        <p class="text-gold font-medium">₹1,80,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2070&auto=format&fit=crop" alt="Enamel Cuffs" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute top-4 left-4 bg-gold text-black text-[10px] font-bold uppercase px-3 py-1">Only 3 Left</div>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Enamel Cuffs</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier II: Investment Heirloom</p>
+                        <p class="text-gold font-medium">₹6,20,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=2070&auto=format&fit=crop" alt="Stud Earrings" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">View Details</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Stud Earrings</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier I: Prestige Access</p>
+                        <p class="text-gold font-medium">₹2,50,000</p>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden mb-6 aspect-square bg-[#111]">
+                        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop" alt="Bridal Commission" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 uppercase tracking-widest text-xs hover:bg-gold transition-colors">Inquire</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-serif text-white group-hover:text-gold transition-colors">Bridal Commission</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1 mb-2">Tier III: Haute Enamelling</p>
+                        <p class="text-gold font-medium">On Request</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE DROP (Scarcity Strategy) -->
+    <section id="the-drop" class="py-32 bg-black relative overflow-hidden border-y border-gold/20">
+        <!-- Decorative Background -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gold/5 skew-x-12 transform origin-top-right"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/2">
+                <span class="text-red-500 font-mono text-xs tracking-widest mb-4 block animate-pulse">● LIVE DROP ENDS IN 04:22:18</span>
+                <h2 class="text-5xl md:text-7xl font-serif text-white mb-6 leading-none">
+                    KLN-0001 <br/> <span class="text-gold italic">Cufflink</span>
+                </h2>
+                <p class="text-gray-400 mb-8 font-light leading-relaxed max-w-md">
+                    The inaugural piece. 18 firings of Emerald Green enamel on 22k Gold. Signed, numbered, and never to be reproduced.
+                </p>
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center text-gold/80 text-sm tracking-widest">
+                        <i data-lucide="gem" class="w-4 h-4 mr-3"></i>
+                        <span>50 PIECES GLOBAL ALLOCATION</span>
+                    </div>
+                    <div class="flex items-center text-gold/80 text-sm tracking-widest">
+                        <i data-lucide="history" class="w-4 h-4 mr-3"></i>
+                        <span>ARCHIVE DATE: DEC 2025</span>
+                    </div>
+                </div>
+                <button class="mt-10 px-12 py-5 bg-gold text-black font-bold uppercase tracking-[0.2em] hover:scale-105 transition-transform duration-300">
+                    Secure Allocation
+                </button>
+            </div>
+
+            <div class="w-full md:w-1/2 relative h-[500px]">
+                <!-- Abstract representation of the product -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-[#004225] to-black rounded-sm border border-gold/30 flex items-center justify-center overflow-hidden group">
+                    <div class="w-[80%] h-[80%] border border-gold/10 absolute transform rotate-45 group-hover:rotate-0 transition-all duration-1000"></div>
+                    <div class="text-center">
+                        <h3 class="text-gold text-9xl font-serif opacity-20 select-none">01</h3>
+                        <p class="text-white uppercase tracking-[0.5em] text-xs mt-4">The First Lineage</p>
+                    </div>
+                    
+                    <!-- Spotlight Effect -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gold rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ATELIER EXPERIENCE -->
+    <section id="atelier" class="py-24 bg-[#080808] relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-stretch">
+                <!-- Text Side -->
+                <div class="w-full md:w-1/2 pr-0 md:pr-16 flex flex-col justify-center mb-12 md:mb-0">
+                    <h2 class="text-4xl font-serif text-white mb-6">The Artisan's Atelier</h2>
+                    <div class="h-[1px] w-24 bg-gold mb-8"></div>
+                    <p class="text-gray-400 font-light mb-6 leading-7">
+                        Through our digital "Artisan's Window," we offer complete transparency. Observe a master <i>karigar</i> working on a piece using a single-hair brush. 
+                        We aim to emotionally connect the buyer to the maker.
+                    </p>
+                    <p class="text-gray-400 font-light mb-10 leading-7">
+                        Every piece is accompanied by the <strong class="text-gold">Noble Ledger</strong>, a passport verifying the artisan's identity, the gold's ethical source, and the specific firing history.
+                    </p>
+                    <a href="#" class="inline-flex items-center text-gold uppercase tracking-widest text-xs hover:text-white transition-colors">
+                        Enter Virtual Atelier <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Video/Image Side -->
+                <div class="w-full md:w-1/2 relative h-[400px] bg-[#111]">
+                    <img src="https://images.unsplash.com/photo-1590422749842-53697e857473?q=80&w=2070&auto=format&fit=crop" alt="Artisan Hand" class="w-full h-full object-cover opacity-60 hover:opacity-80 transition-opacity duration-700 grayscale hover:grayscale-0">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="w-20 h-20 rounded-full border border-white/30 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform duration-300 group">
+                            <i data-lucide="play" class="fill-white text-white ml-1 group-hover:text-gold group-hover:fill-gold transition-colors w-8 h-8"></i>
+                        </button>
+                    </div>
+                    <div class="absolute bottom-6 left-6 text-white text-xs uppercase tracking-widest bg-black/50 px-4 py-2 backdrop-blur">
+                        Live Feed: Jaipur Studio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BESPOKE / PROVENANCE BAR -->
+    <section id="provenance" class="py-24 bg-charcoal border-t border-gold/10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto bg-[#0f0f0f] border border-gold/20 p-12 md:p-16 relative">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-charcoal px-6">
+                    <span class="text-gold font-serif text-2xl">The Bespoke Portal</span>
+                </div>
+                <p class="text-gray-400 font-light mb-8">
+                    Initiate a private commission or consult with our concierge. 
+                    Review designs, choose enamel colors, and create a true family heirloom.
+                </p>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <input type="text" placeholder="Surname" class="bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-gold transition-colors placeholder:text-gray-600 font-light">
+                        <input type="email" placeholder="Private Email" class="bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-gold transition-colors placeholder:text-gray-600 font-light">
+                    </div>
+                    <button class="w-full md:w-auto px-12 py-4 bg-[#1a1a1a] text-gold border border-gold/30 hover:bg-gold hover:text-black hover:border-gold transition-all duration-300 uppercase tracking-widest text-xs mt-4">
+                        Request Appointment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-16 border-t border-gold/20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div>
+                    <h2 class="text-2xl font-serif text-gold mb-4">KAULĪNAGE</h2>
+                    <p class="text-gray-500 text-sm max-w-xs leading-relaxed">
+                        National Institute of Fashion Technology, Jodhpur.<br/>
+                        Luxury Brand Management.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-12">
+                    <div>
+                        <h4 class="text-white uppercase tracking-widest text-xs mb-6">Maison</h4>
+                        <ul class="space-y-4 text-sm text-gray-500">
+                            <li><a href="#" class="hover:text-gold">About Us</a></li>
+                            <li><a href="#" class="hover:text-gold">The 18 Firings</a></li>
+                            <li><a href="#" class="hover:text-gold">Ethical Gold</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white uppercase tracking-widest text-xs mb-6">Client Care</h4>
+                        <ul class="space-y-4 text-sm text-gray-500">
+                            <li><a href="#" class="hover:text-gold">White-Glove Delivery</a></li>
+                            <li><a href="#" class="hover:text-gold">Provenance Ledger</a></li>
+                            <li><a href="#" class="hover:text-gold">Contact Concierge</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-auto">
+                    <h4 class="text-white uppercase tracking-widest text-xs mb-6">Newsletter</h4>
+                    <div class="flex border-b border-gray-700 pb-2">
+                        <input type="email" placeholder="Your Email" class="bg-transparent w-full text-white focus:outline-none placeholder:text-gray-600 text-sm">
+                        <button class="text-gold text-xs uppercase hover:text-white">Join</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-xs text-gray-700">
+                <p>&copy; 2025 KAULĪNAGE. All Rights Reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <span>Privacy Policy</span>
+                    <span>Terms of Sale</span>
+                    <span>Accessibility</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPT -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // SCROLL NAVBAR EFFECT
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-charcoal/95', 'backdrop-blur-md', 'border-b', 'border-gold/20', 'py-4');
+                navbar.classList.remove('bg-transparent', 'py-8');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-8');
+                navbar.classList.remove('bg-charcoal/95', 'backdrop-blur-md', 'border-b', 'border-gold/20', 'py-4');
+            }
+        });
+
+        // MOBILE MENU TOGGLE
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            document.body.classList.toggle('overflow-hidden'); // Prevent background scroll
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        // Close menu when clicking a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // TAB SWITCHER
+        function switchTab(tabName) {
+            // Content
+            document.getElementById('content-nawab').style.display = 'none';
+            document.getElementById('content-rajkumari').style.display = 'none';
+            document.getElementById('content-' + tabName).style.display = 'grid'; // Or 'flex' depending on your layout, here grid
+
+            // Remove hidden class manually to override standard Tailwind hidden
+            if(tabName === 'nawab') {
+                 document.getElementById('content-nawab').classList.remove('hidden');
+                 document.getElementById('content-rajkumari').classList.add('hidden');
+            } else {
+                 document.getElementById('content-rajkumari').classList.remove('hidden');
+                 document.getElementById('content-nawab').classList.add('hidden');
+            }
+
+            // Buttons
+            const btnNawab = document.getElementById('tab-nawab');
+            const btnRajkumari = document.getElementById('tab-rajkumari');
+
+            // Reset classes
+            const activeClasses = ['text-gold', 'border-b-2', 'border-gold'];
+            const inactiveClasses = ['text-gray-600', 'hover:text-gray-400'];
+
+            if (tabName === 'nawab') {
+                btnNawab.classList.add(...activeClasses);
+                btnNawab.classList.remove(...inactiveClasses);
+                
+                btnRajkumari.classList.add(...inactiveClasses);
+                btnRajkumari.classList.remove(...activeClasses);
+            } else {
+                btnRajkumari.classList.add(...activeClasses);
+                btnRajkumari.classList.remove(...inactiveClasses);
+                
+                btnNawab.classList.add(...inactiveClasses);
+                btnNawab.classList.remove(...activeClasses);
+            }
+        }
+    </script>
+</body>
+</html>
